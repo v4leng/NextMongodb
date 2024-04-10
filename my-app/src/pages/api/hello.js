@@ -15,6 +15,15 @@ export default async function handler(req, res) {
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
+  }
+  if (req.method === "GET") {
+    await connectDB();
+    try {
+      const users = await userModel.find({});
+      return res.status(200).json({ data: users });
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
   } else {
     // Handle any other HTTP method
     return res.status(405).end();
